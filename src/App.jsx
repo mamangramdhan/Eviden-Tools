@@ -5,7 +5,7 @@ import {
   Layout, Scan, Edit3, AlertCircle, Clipboard, Send, XCircle, Info, MessageSquare, Hash, FileText
 } from 'lucide-react';
 
-const ALLOWED_USER_IDS = [
+const ALLOWED_USERS = [
   {
     id: 1379187380,
     namaLengkap: "Dona Ramdani",
