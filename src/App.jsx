@@ -5,9 +5,19 @@ import {
   Layout, Scan, Edit3, AlertCircle, Clipboard, Send, XCircle, Info, MessageSquare, Hash, FileText
 } from 'lucide-react';
 
-const ALLOWED_USER_IDS = [1379187380]; 
+const ALLOWED_USER_IDS = [
+  {
+    id: 1379187380,
+    namaLengkap: "Dona Ramdani",
+    nik: "25940172",
+    area: "CJA_3",
+    mitra: "TA"
+  },
+
+]; 
 
 const App = () => {
+  const [techData, setTechData] = useState({ namaLengkap: "", nik: "", area: "", mitra: "" });
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({ first_name: "Teknisi", username: "Guest", id: null });
@@ -107,25 +117,25 @@ const penyebab = alasanGanti === 'Lainnya' ? alasanLainnya : alasanGanti;
         : `${keteranganTambahan || '-'}`;
 
       const caption = `
-📢 LAPORAN EVIDEN GANTI ${jenisNTE}
+📢 <b>LAPORAN EVIDEN GANTI ${jenisNTE}</b>
 <code>${getFormattedDate()}</code>
 
-🔸 STO: CJA
-🔸 NO TIKET: ${parsedData.noTiket}
-🔸 NO INET/TLP/ALPRO: ${parsedData.noInternet}
-🔸 JENIS TIKET: ${jenisTiket}
-🔸 MATERIAL: NTE ${jenisNTE}
-🔸 SN LAMA: ${barcodeData[0]}
-🔸 SN BARU: ${barcodeData[1]}
-🔸 SEGMEN GANGGUAN: ${jenisNTE}
-🔸 PENYEBAB GANGGUAN: ${penyebab}
-🔸 PERBAIKAN: GANTI ONT
-🔸 CP AKTIF: ${parsedData.cp}
-🔸 KET LAIN: ${ketLainText}
-👷‍♂️ TEKNISI: ${user.first_name} / @${user.username}
-👝 LABOR: -
-📍 SEKTOR: -
-🏢 MITRA: TA`.trim();
+🔸 <b>STO</b>: CJA
+🔸 <b>NO TIKET</b>: ${parsedData.noTiket}
+🔸 <b>NO INET/TLP/ALPRO</b>: ${parsedData.noInternet}
+🔸 <b>JENIS TIKET</b>: ${jenisTiket}
+🔸 <b>MATERIAL</b>: NTE ${jenisNTE}
+🔸 <b>SN LAMA</b>: ${barcodeData[0]}
+🔸 <b>SN BARU</b>: ${barcodeData[1]}
+🔸 <b>SEGMEN GANGGUAN</b>: ${jenisNTE}
+🔸 <b>PENYEBAB GANGGUAN</b>: ${penyebab}
+🔸 <b>PERBAIKAN</b>: GANTI ONT
+🔸 <b>CP AKTIF</b>: ${parsedData.cp}
+🔸 <b>KET LAIN</b>: ${ketLainText}
+👷‍♂️ <b>TEKNISI</b>: ${techData.namaLengkap} / @${user.username || 'Guest'}
+👝 <b>LABOR</b>: ${techData.nik}
+📍 <b>SEKTOR</b>: ${techData.area}
+🏢 <b>MITRA</b>: ${techData.mitra}`.trim();
 
       // Kirim ke Telegram
       const formData = new FormData();
@@ -154,25 +164,31 @@ const penyebab = alasanGanti === 'Lainnya' ? alasanLainnya : alasanGanti;
   };
 
   useEffect(() => {
-    const checkAccess = () => {
-      const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-      const tg = window.Telegram?.WebApp;
-      const telegramUser = tg?.initDataUnsafe?.user;
+  const checkAccess = () => {
+    const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+    const tg = window.Telegram?.WebApp;
+    const telegramUser = tg?.initDataUnsafe?.user;
 
-      if (isLocalhost) {
-        setUser({ first_name: "Developer", id: "LOCAL", username: "localhost" });
+    if (isLocalhost) {
+      setUser({ first_name: "Developer", id: "LOCAL", username: "dev_local" });
+      setTechData({ namaLengkap: "Dev Mode", nik: "000000", area: "LOCAL", mitra: "LOCAL" });
+      setIsAuthorized(true);
+    } else if (tg && telegramUser) {
+      setUser(telegramUser);
+      
+      // Cari user berdasarkan ID Telegram
+      const foundUser = ALLOWED_USERS.find(u => u.id === Number(telegramUser.id));
+      
+      if (foundUser) {
+        setTechData(foundUser); // Simpan data lengkap ke state
         setIsAuthorized(true);
-      } else if (tg && telegramUser) {
-        setUser(telegramUser);
-        if (ALLOWED_USER_IDS.includes(Number(telegramUser.id))) {
-          setIsAuthorized(true);
-          tg.expand();
-        }
-      } 
-      setLoading(false);
-    };
-    setTimeout(checkAccess, 500);
-  }, []);
+        tg.expand();
+      }
+    } 
+    setLoading(false);
+  };
+  setTimeout(checkAccess, 500);
+}, []);
 
   useEffect(() => {
     if (!rawText) {
@@ -253,7 +269,7 @@ const penyebab = alasanGanti === 'Lainnya' ? alasanLainnya : alasanGanti;
               <h1 className="text-xl font-black text-slate-800 tracking-tight">Eviden Tool v3</h1>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <p className="text-[10px] font-bold text-slate-500 uppercase">{user.first_name}</p>
+                <p className="text-[10px] font-bold text-slate-500 uppercase">{techData.namaLengkap || "Guest User"}</p>
               </div>
             </div>
           </div>
