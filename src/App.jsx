@@ -20,7 +20,7 @@ const App = () => {
   const [techData, setTechData] = useState({ namaLengkap: "", nik: "", area: "", mitra: "" });
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState({ first_name: "Teknisi", username: "Guest", id: null });
+  const [user, setUser] = useState(null);
   const [jenisNTE, setJenisNTE] = useState('ONT');
   const [jenisTiket, setJenisTiket] = useState('HVC');
   
