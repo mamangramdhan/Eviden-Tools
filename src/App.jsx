@@ -20,7 +20,7 @@ const App = () => {
   const [techData, setTechData] = useState({ namaLengkap: "", nik: "", area: "", mitra: "" });
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({ first_name: "Teknisi", username: "Guest", id: null });
   const [jenisNTE, setJenisNTE] = useState('ONT');
   const [jenisTiket, setJenisTiket] = useState('HVC');
   
@@ -167,27 +167,42 @@ const penyebab = alasanGanti === 'Lainnya' ? alasanLainnya : alasanGanti;
   const checkAccess = () => {
     const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
     const tg = window.Telegram?.WebApp;
+    
+    // Validasi: Apakah initData ada? (Hanya ada jika dibuka via Telegram)
+    const isInsideTelegram = tg && tg.initData !== "";
     const telegramUser = tg?.initDataUnsafe?.user;
 
     if (isLocalhost) {
+      // Biarkan mode developer tetap bisa diakses di browser
       setUser({ first_name: "Developer", id: "LOCAL", username: "dev_local" });
       setTechData({ namaLengkap: "Dev Mode", nik: "000000", area: "LOCAL", mitra: "LOCAL" });
       setIsAuthorized(true);
-    } else if (tg && telegramUser) {
+    } else if (isInsideTelegram && telegramUser) {
       setUser(telegramUser);
       
-      // Cari user berdasarkan ID Telegram
+      // Cari user berdasarkan ID Telegram di array ALLOWED_USERS
       const foundUser = ALLOWED_USERS.find(u => u.id === Number(telegramUser.id));
       
       if (foundUser) {
-        setTechData(foundUser); // Simpan data lengkap ke state
+        setTechData(foundUser);
         setIsAuthorized(true);
-        tg.expand();
+        tg.expand(); // Buka aplikasi layar penuh
+        tg.ready();
+      } else {
+        // Jika user masuk telegram tapi ID tidak terdaftar
+        setIsAuthorized(false);
       }
-    } 
+    } else {
+      // Jika tidak di localhost dan tidak di dalam Telegram
+      setIsAuthorized(false);
+    }
+    
     setLoading(false);
   };
-  setTimeout(checkAccess, 500);
+
+  // Beri jeda sedikit agar library Telegram WebApp termuat sempurna
+  const timer = setTimeout(checkAccess, 500);
+  return () => clearTimeout(timer);
 }, []);
 
   useEffect(() => {
@@ -255,8 +270,48 @@ const penyebab = alasanGanti === 'Lainnya' ? alasanLainnya : alasanGanti;
     return allPhotos && ticketOk && snOk && alasanOk && valinsOk;
   };
 
-  if (loading) return <div className="min-h-screen bg-slate-50 flex items-center justify-center animate-pulse"><div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div></div>;
+if (loading) {
+  return (
+    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center">
+      <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+      <p className="text-slate-500 font-bold animate-pulse text-xs uppercase tracking-widest">Memvalidasi Akses...</p>
+    </div>
+  );
+}
 
+// 2. Error State: Jika bukan di Telegram atau ID tidak terdaftar
+if (!isAuthorized) {
+  const isBrowser = !window.Telegram?.WebApp || window.Telegram?.WebApp?.initData === "";
+
+  return (
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6 text-center">
+      <div className="max-w-sm w-full bg-white p-8 rounded-3xl shadow-xl border border-slate-200">
+        <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
+          <ShieldAlert size={40} className="text-red-500" />
+        </div>
+        
+        <h2 className="text-2xl font-black text-slate-800 mb-2 uppercase italic">Akses Terbatas</h2>
+        
+        <div className="space-y-4 text-sm font-medium text-slate-500 mb-8">
+          {isBrowser ? (
+            <p>Aplikasi ini hanya dapat diakses melalui <span className="text-blue-600 font-bold">Telegram Mini App</span> resmi teknisi.</p>
+          ) : (
+            <p>ID Telegram Anda (<code className="bg-slate-100 px-1 rounded text-red-500">{user.id || 'N/A'}</code>) belum terdaftar di sistem. Silahkan hubungi Admin STO.</p>
+          )}
+        </div>
+
+        <button 
+          onClick={() => window.location.reload()}
+          className="w-full py-3 bg-slate-800 text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-black transition-all"
+        >
+          REFRESH HALAMAN
+        </button>
+        
+        <p className="mt-6 text-[10px] font-black text-slate-300 uppercase tracking-widest italic">Eviden Tool Security System</p>
+      </div>
+    </div>
+  );
+}
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans pb-20">
       <div className="max-w-5xl mx-auto">
