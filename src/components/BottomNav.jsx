@@ -11,7 +11,7 @@ export default function BottomNav({ active, onChange }) {
   return (
     <nav
       style={{ background: '#111827', borderTop: '1px solid #1f2d42' }}
-      className="fixed bottom-0 left-0 right-0 flex items-center justify-around h-16 z-50 max-w-[430px] mx-auto"
+      className="fixed bottom-0 left-0 right-0 flex items-center justify-around h-16 z-50"
     >
       {navItems.map(({ key, label, icon: Icon }) => {
         const isActive = active === key;

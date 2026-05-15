@@ -153,8 +153,6 @@ export default function App() {
     <div
       style={{
         height: '100dvh',
-        maxWidth: '430px',
-        margin: '0 auto',
         background: '#0e1117',
         position: 'relative',
         overflow: 'hidden',
@@ -162,7 +160,17 @@ export default function App() {
         flexDirection: 'column',
       }}
     >
-      <div style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
+      {/* Content area — centered max-width container for large screens */}
+      <div
+        style={{
+          flex: 1,
+          overflow: 'hidden',
+          position: 'relative',
+          maxWidth: '680px',
+          width: '100%',
+          margin: '0 auto',
+        }}
+      >
         {activePage === 'home' && <HomePage techData={techData} user={user} />}
         {activePage === 'generate' && <GeneratePage onNavigate={handleSubNavigate} />}
         {activePage === 'settings' && <SettingsPage techData={techData} user={user} />}
