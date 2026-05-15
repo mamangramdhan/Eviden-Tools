@@ -1,20 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-base: #f9f9fb;
-  --color-bg-card: #ffffff;
-  --color-bg-input: #f5f5f7;
-  --color-bg-elevated: #ffffff;
-  --color-accent: #0066cc;
-  --color-accent-dim: #004da6;
-  --color-accent-green: #00b366;
-  --color-accent-orange: #ff8c42;
-  --color-accent-red: #ff4d4d;
-  --color-accent-purple: #7c4dff;
-  --color-text-primary: #1d1d1d;
-  --color-text-secondary: #666666;
-  --color-text-muted: #888888;
-  --color-border: #e8e8e8;
+  --color-bg-base:      #f4f6f9;
+  --color-bg-card:      #ffffff;
+  --color-bg-subtle:    #f0f5ff;
+  --color-primary:      #1a56db;
+  --color-primary-light:#dbeafe;
+  --color-green:        #059669;
+  --color-green-light:  #d1fae5;
+  --color-orange:       #ea580c;
+  --color-orange-light: #ffedd5;
+  --color-purple:       #7c3aed;
+  --color-purple-light: #ede9fe;
+  --color-text:         #111827;
+  --color-text-sub:     #6b7280;
+  --color-text-muted:   #9ca3af;
+  --color-border:       #e5e7eb;
   --font-sans: 'Inter', system-ui, sans-serif;
 }
 
@@ -27,8 +28,8 @@
 html, body, #root {
   height: 100%;
   height: 100dvh;
-  background-color: #f9f9fb;
-  color: #1d1d1d;
+  background-color: #f4f6f9;
+  color: #111827;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
@@ -36,4 +37,4 @@ html, body, #root {
 
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #d0d0d0; border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }

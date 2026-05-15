@@ -77,17 +77,11 @@ export default function App() {
   // --- Loading Screen ---
   if (loading) {
     return (
-      <div
-        className="flex flex-col items-center justify-center"
-        style={{ height: '100dvh', background: '#0e1117' }}
-      >
-        <div
-          className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5"
-          style={{ background: '#1a3a52', border: '1px solid #2a4a64' }}
-        >
-          <Loader2 size={32} style={{ color: '#2b9ed4' }} className="animate-spin" />
+      <div className="flex flex-col items-center justify-center h-dvh bg-[#f4f6f9]">
+        <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 bg-blue-50">
+          <Loader2 size={32} className="text-blue-600 animate-spin" />
         </div>
-        <p className="text-xs font-black uppercase tracking-widest animate-pulse" style={{ color: '#556070' }}>
+        <p className="text-xs font-bold uppercase tracking-widest text-gray-400 animate-pulse">
           Memvalidasi Akses...
         </p>
       </div>
@@ -98,40 +92,25 @@ export default function App() {
   if (!isAuthorized) {
     const isBrowser = !window.Telegram?.WebApp || window.Telegram?.WebApp?.initData === '';
     return (
-      <div
-        className="flex items-center justify-center p-6"
-        style={{ height: '100dvh', background: '#0e1117' }}
-      >
-        <div
-          className="w-full max-w-sm rounded-3xl p-8 text-center"
-          style={{ background: '#1a2035', border: '1px solid #2a3347' }}
-        >
-          <div
-            className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6"
-            style={{ background: '#e0525222' }}
-          >
-            <ShieldAlert size={40} style={{ color: '#e05252' }} />
+      <div className="flex items-center justify-center p-6 h-dvh bg-[#f4f6f9]">
+        <div className="w-full max-w-sm bg-white rounded-2xl p-8 text-center shadow-md">
+          <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 bg-red-50">
+            <ShieldAlert size={40} className="text-red-500" />
           </div>
-          <h2
-            className="text-xl font-black uppercase mb-3"
-            style={{ color: '#e8eaf0' }}
-          >
-            Akses Terbatas
-          </h2>
-          <p className="text-sm font-medium leading-relaxed mb-6" style={{ color: '#8b95a8' }}>
+          <h2 className="text-xl font-black uppercase text-gray-900 mb-3">Akses Terbatas</h2>
+          <p className="text-sm font-medium leading-relaxed text-gray-500 mb-6">
             {isBrowser
-              ? <>Aplikasi ini hanya dapat diakses melalui <span style={{ color: '#2b9ed4', fontWeight: 700 }}>Telegram Mini App</span> resmi teknisi.</>
-              : <>ID Telegram Anda (<code style={{ color: '#e05252', fontWeight: 700 }}>{user.id || 'N/A'}</code>) belum terdaftar. Hubungi Admin STO.</>
+              ? <>Aplikasi ini hanya dapat diakses melalui <span className="text-blue-600 font-bold">Telegram Mini App</span> resmi teknisi.</>
+              : <>ID Telegram Anda (<code className="text-red-500 font-bold">{user.id || 'N/A'}</code>) belum terdaftar. Hubungi Admin STO.</>
             }
           </p>
           <button
             onClick={() => window.location.reload()}
-            className="w-full py-3.5 rounded-2xl font-black text-sm"
-            style={{ background: '#1e2740', color: '#e8eaf0', border: '1px solid #2a3347' }}
+            className="w-full py-3.5 rounded-xl font-bold text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
           >
             Refresh Halaman
           </button>
-          <p className="mt-5 text-[10px] font-black uppercase tracking-widest" style={{ color: '#2a3347' }}>
+          <p className="mt-5 text-[10px] font-semibold uppercase tracking-widest text-gray-300">
             Eviden Tools Security System
           </p>
         </div>
@@ -142,36 +121,17 @@ export default function App() {
   // --- Sub-Pages (full screen, no bottom nav) ---
   if (subPage) {
     const commonProps = { onBack: handleBack, techData, user };
-    if (subPage === 'ganti_nte') return <div style={{ height: '100dvh', background: '#0e1117', overflow: 'hidden' }}><GantiNtePage {...commonProps} /></div>;
-    if (subPage === 'reguler')   return <div style={{ height: '100dvh', background: '#0e1117', overflow: 'hidden' }}><RegulerPage {...commonProps} /></div>;
-    if (subPage === 'proman')    return <div style={{ height: '100dvh', background: '#0e1117', overflow: 'hidden' }}><PromanPage {...commonProps} /></div>;
-    if (subPage === 'infracare') return <div style={{ height: '100dvh', background: '#0e1117', overflow: 'hidden' }}><InfracarePage {...commonProps} /></div>;
+    if (subPage === 'ganti_nte') return <div className="h-dvh overflow-hidden bg-[#f4f6f9]"><GantiNtePage {...commonProps} /></div>;
+    if (subPage === 'reguler')   return <div className="h-dvh overflow-hidden bg-[#f4f6f9]"><RegulerPage {...commonProps} /></div>;
+    if (subPage === 'proman')    return <div className="h-dvh overflow-hidden bg-[#f4f6f9]"><PromanPage {...commonProps} /></div>;
+    if (subPage === 'infracare') return <div className="h-dvh overflow-hidden bg-[#f4f6f9]"><InfracarePage {...commonProps} /></div>;
   }
 
   // --- Main App Shell with Bottom Nav ---
   return (
-    <div
-      style={{
-        height: '100dvh',
-        background: '#f9f9fb',
-        position: 'relative',
-        overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      {/* Content area — centered max-width container for large screens */}
-      <div
-        style={{
-          flex: 1,
-          overflow: 'hidden',
-          position: 'relative',
-          maxWidth: '680px',
-          width: '100%',
-          margin: '0 auto',
-        }}
-      >
-        {activePage === 'home' && <HomePage techData={techData} user={user} />}
+    <div className="h-dvh bg-[#f4f6f9] flex flex-col overflow-hidden">
+      <div className="flex-1 overflow-hidden relative w-full max-w-2xl mx-auto">
+        {activePage === 'home'     && <HomePage techData={techData} user={user} />}
         {activePage === 'generate' && <GeneratePage onNavigate={handleSubNavigate} />}
         {activePage === 'settings' && <SettingsPage techData={techData} user={user} />}
       </div>

@@ -1,163 +1,145 @@
 import React from 'react';
-import {
-  TrendingUp, CheckCircle2, Clock, Star, Award, Wifi, BarChart3
-} from 'lucide-react';
+import { TrendingUp, CheckCircle2, Clock, Star, Award, Wifi, BarChart3 } from 'lucide-react';
 
-const StatCard = ({ label, value, sub, color, icon: Icon }) => (
-  <div
-    className="rounded-xl p-4 flex flex-col gap-2"
-    style={{ background: '#f5f5f7', border: 'none' }}
-  >
-    <div className="flex items-center justify-between">
-      <span className="text-xs font-semibold leading-relaxed" style={{ color: '#666666' }}>{label}</span>
-      <div
-        className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-        style={{ background: `${color}15` }}
-      >
-        <Icon size={18} style={{ color }} />
+const STATS = [
+  { label: 'Tiket Selesai', value: '8',    sub: 'dari 10 target',    icon: CheckCircle2, iconCls: 'text-emerald-600', bgCls: 'bg-emerald-50',  valCls: 'text-emerald-600' },
+  { label: 'Tiket Aktif',   value: '2',    sub: 'sedang dikerjakan', icon: Clock,        iconCls: 'text-orange-500',  bgCls: 'bg-orange-50',   valCls: 'text-orange-500'  },
+  { label: 'Avg Response',  value: '14m',  sub: 'waktu respons',     icon: TrendingUp,   iconCls: 'text-blue-600',    bgCls: 'bg-blue-50',     valCls: 'text-blue-600'    },
+  { label: 'SLA Terpenuhi', value: '100%', sub: 'hari ini',          icon: Star,         iconCls: 'text-violet-600',  bgCls: 'bg-violet-50',   valCls: 'text-violet-600'  },
+];
+
+const TICKETS = [
+  { label: 'GANTI NTE', count: 4, pct: 50,   barCls: 'bg-blue-500'    },
+  { label: 'REGULER',   count: 2, pct: 25,   barCls: 'bg-emerald-500' },
+  { label: 'PROMAN',    count: 1, pct: 12.5, barCls: 'bg-orange-500'  },
+  { label: 'INFRACARE', count: 1, pct: 12.5, barCls: 'bg-violet-500'  },
+];
+
+function StatCard({ label, value, sub, icon: Icon, iconCls, bgCls, valCls }) {
+  return (
+    <div className="bg-white rounded-xl p-4 flex flex-col gap-2 shadow-sm">
+      <div className="flex items-center justify-between">
+        <span className="text-xs font-semibold text-gray-500 leading-relaxed">{label}</span>
+        <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${bgCls}`}>
+          <Icon size={18} className={iconCls} />
+        </div>
       </div>
+      <p className={`text-3xl font-black leading-none ${valCls}`}>{value}</p>
+      <p className="text-xs font-medium text-gray-400 leading-relaxed">{sub}</p>
     </div>
-    <p className="text-3xl font-black leading-none" style={{ color: '#1d1d1d' }}>{value}</p>
-    {sub && <p className="text-xs font-medium leading-relaxed" style={{ color: '#888888' }}>{sub}</p>}
-  </div>
-);
+  );
+}
 
 export default function HomePage({ techData, user }) {
   const name = techData?.namaLengkap || user?.first_name || 'Teknisi';
-  const now = new Date();
-  const hour = now.getHours();
+  const hour = new Date().getHours();
   const greeting =
     hour < 12 ? 'Selamat Pagi' :
     hour < 15 ? 'Selamat Siang' :
     hour < 18 ? 'Selamat Sore' :
     'Selamat Malam';
 
-  const ticketTypes = [
-    { label: 'GANTI NTE', count: 4, pct: 50,   color: '#0066cc' },
-    { label: 'REGULER',   count: 2, pct: 25,   color: '#00b366' },
-    { label: 'PROMAN',    count: 1, pct: 12.5, color: '#ff8c42' },
-    { label: 'INFRACARE', count: 1, pct: 12.5, color: '#7c4dff' },
-  ];
-
   return (
-    <div className="h-full overflow-y-auto" style={{ paddingBottom: '88px' }}>
+    <div className="h-full overflow-y-auto bg-[#f4f6f9]" style={{ paddingBottom: '88px' }}>
 
-      {/* ── Header ── */}
-      <div className="px-5 pt-10 pb-8 sm:px-8 sm:pt-12" style={{ background: '#ffffff' }}>
-        <div className="flex items-center justify-between gap-4 mb-6">
+      {/* Header */}
+      <div className="bg-white px-5 pt-10 pb-7 sm:px-8 sm:pt-12">
+        <div className="flex items-center justify-between gap-4 mb-5">
           <div className="min-w-0">
-            <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: '#0066cc' }}>
-              {greeting}
-            </p>
-            <h1 className="text-xl font-black truncate sm:text-2xl" style={{ color: '#1d1d1d' }}>{name}</h1>
-            <p className="text-xs font-medium mt-1 leading-relaxed" style={{ color: '#888888' }}>
+            <p className="text-xs font-bold uppercase tracking-widest text-blue-600 mb-1">{greeting}</p>
+            <h1 className="text-xl font-black text-gray-900 truncate sm:text-2xl">{name}</h1>
+            <p className="text-xs font-medium text-gray-400 mt-1">
               {techData?.area} &bull; {techData?.mitra}
             </p>
           </div>
-          <div
-            className="w-12 h-12 rounded-lg flex items-center justify-center text-xl font-black flex-shrink-0 sm:w-14 sm:h-14"
-            style={{ background: '#e8f0ff', color: '#0066cc', border: 'none' }}
-          >
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center text-xl font-black flex-shrink-0 bg-blue-50 text-blue-600 sm:w-14 sm:h-14">
             {name.charAt(0).toUpperCase()}
           </div>
         </div>
 
-        {/* Performance Banner */}
-        <div
-          className="rounded-xl p-4 flex items-center gap-4 sm:p-5"
-          style={{ background: '#f0f7ff', border: 'none' }}
-        >
-          <div
-            className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0"
-            style={{ background: '#e8f0ff' }}
-          >
-            <Award size={24} style={{ color: '#0066cc' }} />
+        {/* Performance banner */}
+        <div className="bg-blue-50 rounded-xl p-4 flex items-center gap-4 sm:p-5">
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-blue-100">
+            <Award size={22} className="text-blue-600" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-black" style={{ color: '#1d1d1d' }}>Performa Bulan Ini</p>
-            <p className="text-xs font-medium mt-0.5 leading-relaxed truncate" style={{ color: '#888888' }}>
+            <p className="text-sm font-bold text-gray-900">Performa Bulan Ini</p>
+            <p className="text-xs font-medium text-gray-400 mt-0.5 truncate">
               NIK: {techData?.nik || '-'} &bull; ID: {user?.id || '-'}
             </p>
           </div>
           <div className="text-right flex-shrink-0">
-            <p className="text-2xl font-black leading-none" style={{ color: '#00b366' }}>92%</p>
-            <p className="text-[11px] font-semibold mt-0.5" style={{ color: '#00b366' }}>Score</p>
+            <p className="text-2xl font-black leading-none text-emerald-600">92%</p>
+            <p className="text-[11px] font-semibold text-emerald-500 mt-0.5">Score</p>
           </div>
         </div>
       </div>
 
-      {/* ── Content ── */}
-      <div className="px-5 sm:px-8" style={{ background: '#f9f9fb' }}>
-        <div className="space-y-10 py-10">
+      {/* Divider */}
+      <div className="h-px bg-gray-100" />
 
-          {/* Stats Grid — 2 cols on mobile, 4 cols on wide screens */}
-          <section className="max-w-4xl mx-auto">
-            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: '#888888' }}>
-              Statistik Hari Ini
-            </p>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              <StatCard label="Tiket Selesai"  value="8"    sub="dari 10 target"    color="#00b366" icon={CheckCircle2} />
-              <StatCard label="Tiket Aktif"    value="2"    sub="sedang dikerjakan" color="#ff8c42" icon={Clock}        />
-              <StatCard label="Avg Response"   value="14m"  sub="waktu respons"     color="#0066cc" icon={TrendingUp}   />
-              <StatCard label="SLA Terpenuhi"  value="100%" sub="hari ini"          color="#7c4dff" icon={Star}         />
+      {/* Content */}
+      <div className="px-5 sm:px-8 py-7 space-y-8">
+
+        {/* Stats */}
+        <section>
+          <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-4">
+            Statistik Hari Ini
+          </p>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {STATS.map((s) => <StatCard key={s.label} {...s} />)}
+          </div>
+        </section>
+
+        {/* Divider */}
+        <div className="h-px bg-gray-100" />
+
+        {/* Distribusi Tiket */}
+        <section>
+          <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-4">
+            Distribusi Tiket
+          </p>
+          <div className="bg-white rounded-xl p-5 shadow-sm">
+            <div className="flex items-center gap-2 mb-5">
+              <BarChart3 size={16} className="text-blue-600" />
+              <span className="text-sm font-bold text-gray-900">Jenis Tiket Hari Ini</span>
             </div>
-          </section>
-
-          {/* Distribusi Tiket */}
-          <section className="max-w-4xl mx-auto">
-            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: '#888888' }}>
-              Distribusi Tiket
-            </p>
-            <div
-              className="rounded-xl p-5"
-              style={{ background: '#ffffff', border: 'none' }}
-            >
-              <div className="flex items-center gap-2 mb-4">
-                <BarChart3 size={16} style={{ color: '#0066cc' }} />
-                <span className="text-sm font-bold" style={{ color: '#1d1d1d' }}>Jenis Tiket Hari Ini</span>
-              </div>
-              <div className="space-y-4">
-                {ticketTypes.map(({ label, count, pct, color }) => (
-                  <div key={label}>
-                    <div className="flex justify-between items-center mb-1.5">
-                      <span className="text-xs font-semibold" style={{ color: '#888888' }}>{label}</span>
-                      <span className="text-xs font-bold" style={{ color }}>{count} tiket</span>
-                    </div>
-                    <div className="h-2 rounded-full overflow-hidden" style={{ background: '#e8e8e8' }}>
-                      <div
-                        className="h-2 rounded-full transition-all duration-700"
-                        style={{ width: `${pct}%`, background: color }}
-                      />
-                    </div>
+            <div className="space-y-4">
+              {TICKETS.map(({ label, count, pct, barCls }) => (
+                <div key={label}>
+                  <div className="flex justify-between items-center mb-1.5">
+                    <span className="text-xs font-semibold text-gray-500">{label}</span>
+                    <span className="text-xs font-bold text-gray-700">{count} tiket</span>
                   </div>
-                ))}
-              </div>
+                  <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
+                    <div
+                      className={`h-2 rounded-full transition-all duration-700 ${barCls}`}
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* Status Koneksi */}
-          <section className="max-w-4xl mx-auto">
-            <div
-              className="rounded-xl p-4 flex items-center gap-3 sm:p-5"
-              style={{ background: '#ffffff', border: 'none' }}
-            >
-              <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                style={{ background: '#e8f0ff' }}
-              >
-                <Wifi size={20} style={{ color: '#00b366' }} />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold" style={{ color: '#1d1d1d' }}>Sistem Terhubung</p>
-                <p className="text-xs font-medium leading-relaxed" style={{ color: '#888888' }}>
-                  Telegram WebApp &bull; Online
-                </p>
-              </div>
-              <div className="w-3 h-3 rounded-full flex-shrink-0 bg-[#00b366] animate-pulse" />
+        {/* Divider */}
+        <div className="h-px bg-gray-100" />
+
+        {/* Status Koneksi */}
+        <section>
+          <div className="bg-white rounded-xl p-4 flex items-center gap-3 shadow-sm sm:p-5">
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-emerald-50">
+              <Wifi size={20} className="text-emerald-600" />
             </div>
-          </section>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-bold text-gray-900">Sistem Terhubung</p>
+              <p className="text-xs font-medium text-gray-400">Telegram WebApp &bull; Online</p>
+            </div>
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
+          </div>
+        </section>
 
-        </div>
       </div>
     </div>
   );

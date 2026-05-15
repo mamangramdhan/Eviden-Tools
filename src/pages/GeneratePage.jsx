@@ -7,75 +7,66 @@ const menuCards = [
     label: 'GANTI NTE',
     desc: 'Generate laporan penggantian ONT / STB pelanggan',
     icon: RefreshCw,
-    color: '#0066cc',
-    bg: '#e8f0ff',
+    iconCls: 'text-blue-600',
+    bgCls: 'bg-blue-50',
   },
   {
     key: 'reguler',
     label: 'REGULER',
     desc: 'Generate format laporan gangguan reguler teknisi',
     icon: FileText,
-    color: '#00b366',
-    bg: '#e8f5f0',
+    iconCls: 'text-emerald-600',
+    bgCls: 'bg-emerald-50',
   },
   {
     key: 'proman',
     label: 'PROMAN',
     desc: 'Generate laporan perbaikan ODP / ODC infrastruktur',
     icon: Wrench,
-    color: '#ff8c42',
-    bg: '#fff0e6',
+    iconCls: 'text-orange-500',
+    bgCls: 'bg-orange-50',
   },
   {
     key: 'infracare',
     label: 'INFRACARE',
     desc: 'Generate format laporan tiket infracare jaringan',
     icon: Activity,
-    color: '#7c4dff',
-    bg: '#f3e8ff',
+    iconCls: 'text-violet-600',
+    bgCls: 'bg-violet-50',
   },
 ];
 
 export default function GeneratePage({ onNavigate }) {
   return (
-    <div className="h-full overflow-y-auto" style={{ paddingBottom: '80px', background: '#f9f9fb' }}>
+    <div className="h-full overflow-y-auto bg-[#f4f6f9]" style={{ paddingBottom: '88px' }}>
+
       {/* Header */}
-      <div
-        className="px-5 pt-12 pb-8 sm:px-8"
-        style={{ background: '#ffffff' }}
-      >
-        <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: '#0066cc' }}>
-          Menu Generate
-        </p>
-        <h1 className="text-xl font-black" style={{ color: '#1d1d1d' }}>Pilih Format Laporan</h1>
-        <p className="text-xs font-medium mt-1" style={{ color: '#888888' }}>
-          Pilih jenis laporan yang ingin dibuat
-        </p>
+      <div className="bg-white px-5 pt-12 pb-7 sm:px-8">
+        <p className="text-[11px] font-bold uppercase tracking-widest text-blue-600 mb-1">Menu Generate</p>
+        <h1 className="text-xl font-black text-gray-900">Pilih Format Laporan</h1>
+        <p className="text-xs font-medium text-gray-400 mt-1">Pilih jenis laporan yang ingin dibuat</p>
       </div>
 
-      <div className="px-5 space-y-4 sm:px-8 sm:space-y-5 py-8">
-        {menuCards.map(({ key, label, desc, icon: Icon, color, bg }) => (
+      <div className="h-px bg-gray-100" />
+
+      {/* Menu list */}
+      <div className="px-5 sm:px-8 py-7 space-y-3">
+        {menuCards.map(({ key, label, desc, icon: Icon, iconCls, bgCls }) => (
           <button
             key={key}
             onClick={() => onNavigate(key)}
-            className="w-full text-left rounded-xl p-4 flex items-center gap-4 transition-all duration-200 active:scale-[0.98]"
-            style={{ background: '#ffffff', border: 'none', boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}
+            className="w-full text-left bg-white rounded-xl p-4 flex items-center gap-4 shadow-sm transition-all duration-150 active:scale-[0.98] hover:shadow-md"
           >
-            <div
-              className="w-14 h-14 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ background: bg, border: 'none' }}
-            >
-              <Icon size={26} style={{ color }} />
+            <div className={`w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 ${bgCls}`}>
+              <Icon size={26} className={iconCls} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-base font-black tracking-wide" style={{ color: '#1d1d1d' }}>{label}</p>
-              <p className="text-xs font-medium mt-0.5 leading-relaxed" style={{ color: '#888888' }}>{desc}</p>
+              <p className="text-sm font-black tracking-wide text-gray-900">{label}</p>
+              <p className="text-xs font-medium text-gray-400 mt-0.5 leading-relaxed">{desc}</p>
             </div>
-            <ChevronRight size={18} style={{ color: '#cccccc' }} className="flex-shrink-0" />
+            <ChevronRight size={18} className="text-gray-300 flex-shrink-0" />
           </button>
         ))}
-
-        <div className="h-4" />
       </div>
     </div>
   );
