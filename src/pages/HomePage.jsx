@@ -87,11 +87,11 @@ export default function HomePage({ techData, user }) {
       </div>
 
       {/* ── Content ── */}
-      <div className="px-5 sm:px-8">
+      <div className="px-5 space-y-5 sm:px-8">
 
         {/* Stats Grid — 2 cols on mobile, 4 cols on wide screens */}
-        <div className="py-6 border-b" style={{ borderColor: '#1f2d42' }}>
-          <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: '#556070' }}>
+        <div>
+          <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#556070' }}>
             Statistik Hari Ini
           </p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -103,8 +103,8 @@ export default function HomePage({ techData, user }) {
         </div>
 
         {/* Distribusi Tiket */}
-        <div className="py-6 border-b" style={{ borderColor: '#1f2d42' }}>
-          <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: '#556070' }}>
+        <div>
+          <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#556070' }}>
             Distribusi Tiket
           </p>
           <div
@@ -135,27 +135,26 @@ export default function HomePage({ techData, user }) {
         </div>
 
         {/* Status Koneksi */}
-        <div className="py-6">
+        <div
+          className="rounded-2xl p-4 flex items-center gap-3 sm:p-5"
+          style={{ background: '#1a2035', border: '1px solid #2a3347' }}
+        >
           <div
-            className="rounded-2xl p-4 flex items-center gap-3 sm:p-5"
-            style={{ background: '#1a2035', border: '1px solid #2a3347' }}
+            className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+            style={{ background: '#2ec78522' }}
           >
-            <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ background: '#2ec78522' }}
-            >
-              <Wifi size={20} style={{ color: '#2ec785' }} />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-bold" style={{ color: '#e8eaf0' }}>Sistem Terhubung</p>
-              <p className="text-xs font-medium leading-relaxed" style={{ color: '#556070' }}>
-                Telegram WebApp &bull; Online
-              </p>
-            </div>
-            <div className="w-3 h-3 rounded-full flex-shrink-0 bg-[#2ec785] animate-pulse" />
+            <Wifi size={20} style={{ color: '#2ec785' }} />
           </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-bold" style={{ color: '#e8eaf0' }}>Sistem Terhubung</p>
+            <p className="text-xs font-medium leading-relaxed" style={{ color: '#556070' }}>
+              Telegram WebApp &bull; Online
+            </p>
+          </div>
+          <div className="w-3 h-3 rounded-full flex-shrink-0 bg-[#2ec785] animate-pulse" />
         </div>
 
+        <div className="h-2" />
       </div>
     </div>
   );

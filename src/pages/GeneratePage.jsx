@@ -53,7 +53,7 @@ export default function GeneratePage({ onNavigate }) {
         </p>
       </div>
 
-      <div className="px-5 py-6 sm:px-8 space-y-3">
+      <div className="px-5 space-y-3">
         {menuCards.map(({ key, label, desc, icon: Icon, color, bg }) => (
           <button
             key={key}

@@ -78,10 +78,10 @@ export default function SettingsPage({ techData, user }) {
         </div>
       </div>
 
-      <div className="px-5 sm:px-8">
+      <div className="px-5 space-y-4">
         {/* User Info */}
-        <div className="py-6 border-b" style={{ borderColor: '#1f2d42' }}>
-          <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#556070' }}>Informasi Akun</p>
+        <div>
+          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: '#556070' }}>Informasi Akun</p>
           <div
             className="rounded-2xl px-4"
             style={{ background: '#1a2035', border: '1px solid #2a3347' }}
@@ -96,8 +96,8 @@ export default function SettingsPage({ techData, user }) {
         </div>
 
         {/* App Settings */}
-        <div className="py-6 border-b" style={{ borderColor: '#1f2d42' }}>
-          <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#556070' }}>Aplikasi</p>
+        <div>
+          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: '#556070' }}>Aplikasi</p>
           <div
             className="rounded-2xl px-4"
             style={{ background: '#1a2035', border: '1px solid #2a3347' }}
@@ -109,29 +109,28 @@ export default function SettingsPage({ techData, user }) {
         </div>
 
         {/* Status */}
-        <div className="py-6 border-b" style={{ borderColor: '#1f2d42' }}>
-          <div
-            className="rounded-2xl p-4 flex items-center gap-3"
-            style={{ background: '#1a2035', border: '1px solid #2a3347' }}
-          >
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#2ec78522' }}>
-              <Wifi size={18} style={{ color: '#2ec785' }} />
-            </div>
-            <div className="flex-1">
-              <p className="text-sm font-bold" style={{ color: '#e8eaf0' }}>Status Koneksi</p>
-              <p className="text-xs font-medium" style={{ color: '#556070' }}>Telegram WebApp &bull; Aktif</p>
-            </div>
-            <div className="w-2.5 h-2.5 rounded-full bg-[#2ec785] animate-pulse" />
+        <div
+          className="rounded-2xl p-4 flex items-center gap-3"
+          style={{ background: '#1a2035', border: '1px solid #2a3347' }}
+        >
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#2ec78522' }}>
+            <Wifi size={18} style={{ color: '#2ec785' }} />
           </div>
+          <div className="flex-1">
+            <p className="text-sm font-bold" style={{ color: '#e8eaf0' }}>Status Koneksi</p>
+            <p className="text-xs font-medium" style={{ color: '#556070' }}>Telegram WebApp &bull; Aktif</p>
+          </div>
+          <div className="w-2.5 h-2.5 rounded-full bg-[#2ec785] animate-pulse" />
         </div>
 
         {/* App Version */}
-        <div className="text-center py-6">
+        <div className="text-center py-2">
           <p className="text-[11px] font-bold uppercase tracking-widest" style={{ color: '#2a3347' }}>
             Eviden Tools v4.0 &bull; Eviden Team CJA
           </p>
         </div>
 
+        <div className="h-2" />
       </div>
     </div>
   );
