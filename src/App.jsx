@@ -10,6 +10,9 @@ import PromanPage from './pages/PromanPage.jsx';
 import InfracarePage from './pages/InfracarePage.jsx';
 import SettingsPage from './pages/SettingsPage.jsx';
 
+// Set ke `false` untuk mengaktifkan kembali validasi akses Telegram
+const BYPASS_AUTH = true;
+
 const ALLOWED_USERS = [
   { id: 1379187380, namaLengkap: 'Dona Ramdani', nik: '25940172', area: 'CJA_3', mitra: 'TA' },
 ];
@@ -30,7 +33,11 @@ export default function App() {
       const isInsideTelegram = tg && tg.initData !== '';
       const telegramUser = tg?.initDataUnsafe?.user;
 
-      if (isLocalhost) {
+      if (BYPASS_AUTH) {
+        setUser({ first_name: 'Teknisi', id: 'BYPASS', username: 'guest' });
+        setTechData({ namaLengkap: 'Mode Akses Sementara', nik: '------', area: '---', mitra: '---' });
+        setIsAuthorized(true);
+      } else if (isLocalhost) {
         setUser({ first_name: 'Developer', id: 'LOCAL', username: 'dev_local' });
         setTechData({ namaLengkap: 'Dev Mode', nik: '000000', area: 'LOCAL', mitra: 'LOCAL' });
         setIsAuthorized(true);
